@@ -1,5 +1,15 @@
 # Application J2E-Spring-Angular
 
+Application:
+
+Creer une application Web JEE qui permet de gerer des contacts (id, nom, prenom, date de naissance, email, telephone et photo) a l'aide d'un CRUD.
+ 
+L'application se compose de deux partie:
+* Un backend en Spring, API RestFull
+* Un frontend en angular 
+
+* Architecture de l'application
+
 
 
 
@@ -92,4 +102,5 @@ git branch -M main
 git remote add origin https://github.com/jeanyvesruffin/JEE-Spring-Angular.git
 git push -u origin main
 ```
+
 

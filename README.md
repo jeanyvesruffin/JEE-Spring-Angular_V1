@@ -111,9 +111,14 @@ git push -u origin main
 
 ## Demarrage des serveurs a l'aide de XAMPP
 
-Ajout et demarrage des serveurs a l'aide de Xampp.
+Ajout et demarrage des serveurs (Apache et Mysql) a l'aide de Xampp.
 
 <img src="src/main/resources/images/server.bmp">
+
+Creation de la base de donnees dbcontacts et demarrage de l'application spring. Rafraichire votre navigateur et vous pouvez constater la creation de votre table contact avec leur mies a jours:
+
+
+<img src="src/main/resources/images/create_database.bmp">
 
 
 

@@ -102,13 +102,18 @@ git push -u origin main
 
 # Creation backEnd
 
+## Creation DAO et ENTITY
 
+1. Creation **Entite** (Classe Contact package com.ruffin.entities). Annote: @Entity,@Id @GeneratedValue, @Temporal(TemporalType.DATE), issu de la librairie javax.persistence.
+2. Creation **interface** Jpa Repository (classe: ContactRepository package com.ruffin.dao).
+3. Creation jeu de **Test** notre repository en ajoutant implementation CommadLineRunner(Classe JeeSpringAngularApplication package com.ruffin).
+4. Creation configuration application.properties
 
+## Demarrage des serveurs a l'aide de XAMPP
 
+Ajout et demarrage des serveurs a l'aide de Xampp.
 
-
-
-
+<img src="src/main/resources/images/server.bmp">
 
 
 

@@ -102,7 +102,7 @@ git push -u origin main
 
 # Creation backEnd
 
-## Creation DAO et ENTITY
+## Creation des packages DAO et ENTITY
 
 1. Creation **Entite** (Classe Contact package com.ruffin.entities). Annote: @Entity,@Id @GeneratedValue, @Temporal(TemporalType.DATE), issu de la librairie javax.persistence.
 2. Creation **interface** Jpa Repository (classe: ContactRepository package com.ruffin.dao).
@@ -115,12 +115,81 @@ Ajout et demarrage des serveurs (Apache et Mysql) a l'aide de Xampp.
 
 <img src="src/main/resources/images/server.bmp">
 
-Creation de la base de donnees dbcontacts et demarrage de l'application spring. Rafraichire votre navigateur et vous pouvez constater la creation de votre table contact avec leur mies a jours:
+Creation de la base de donnees dbcontacts et demarrage de l'application spring. 
+
+Rafraichire votre navigateur afin de constater la creation de votre table contact:
 
 
 <img src="src/main/resources/images/create_database.bmp">
 
+## Creation du package Web et mise en oeuvre Services Rest
+
+1 . Creation **service Rest** (classe ContactRestService package com.ruffin.web). Annote: @RestController @Autowired . Si vous interrogez l'adresse url: http://localhost:8080/contacts , vous observerez le Json de retour de la requete. Avec l'url http://localhost:8080/contacts/{id} nous obtenons l'id en question. A l'aide de ARC/POSTMAN ou SOAPUI vous pouvez ajouter un contact.
+
+2 . Ajout methode pour la recherche de contact (interface ContactRepository, package com.ruffin.dao).
+
+3 . Trics interessant indiquer "%"+[variable]+"%" Permet de stipuler qu'il y a des "trucs" avant et apres qui seront accepter.
 
 
+```java
+@RestController
+public class ContactRestService {
+	@Autowired
+	private ContactRepository contactRepository;
+
+	// Consulter la liste des contacts
+	@RequestMapping(value = "/contacts", method = RequestMethod.GET)
+	public List<Contact> getContacts() {
+		return contactRepository.findAll();
+	}
+
+	// Consulter un id en particulier
+	@RequestMapping(value = "/contacts/{id}", method = RequestMethod.GET)
+	public Optional<Contact> getContacts(@PathVariable Long id) {
+		return contactRepository.findById(id);
+	}
+
+	// Ajouter un contact
+	@RequestMapping(value = "/contacts", method = RequestMethod.POST)
+	public Contact save(@RequestBody Contact contact) {
+		return contactRepository.save(contact);
+	}
+
+	// Supprimer un contact
+	@RequestMapping(value = "/contacts/{id}", method = RequestMethod.DELETE)
+	public boolean deleteContact(@PathVariable Long id) {
+		contactRepository.deleteById(id);
+		return true;
+	}
+
+	// Update un contact
+	@RequestMapping(value = "/contacts/{id}", method = RequestMethod.PUT)
+	public Contact save(@PathVariable Long id, @RequestBody Contact contact) {
+		contact.setId(id);
+		return contactRepository.save(contact);
+	}
+
+	// rechercher la page contenant la list des contacts
+	@RequestMapping(value = "/chercherContacts", method = RequestMethod.GET)
+	public Page<Contact> chercher(@RequestParam(name = "motCle", defaultValue = "") String motCle,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
+		Pageable sortedById = PageRequest.of(page, size, Sort.by("id"));
+		return contactRepository.chercher("%" + motCle + "%", sortedById);
+	}
+
+}
+```
+
+```java
+public interface ContactRepository extends JpaRepository<Contact, Long> {
+
+	@Query("select contact from Contact contact where contact.nom like :x")
+	public Page<Contact> chercher(@Param("x") String motCle, Pageable pageable);
+
+}
+```
+
+Lors de l'execution de l'url: http://localhost:8080/chercherContacts?motCle=D nous obtenons la liste des contacts commencant par la lettre "D" (page et size peuvent etre ajoute)
 
 

@@ -190,6 +190,8 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
 }
 ```
 
-Lors de l'execution de l'url: http://localhost:8080/chercherContacts?motCle=D nous obtenons la liste des contacts commencant par la lettre "D" (page et size peuvent etre ajoute)
+Lors de l'execution de l'url: http://localhost:8080/chercherContacts?motCle=D nous obtenons la liste des contacts commencant par la lettre "D" (page et size pouvant etre ajoutes)
 
+# Creation FrontEnd (Angular)
 
+## Installation outils pour Angular
